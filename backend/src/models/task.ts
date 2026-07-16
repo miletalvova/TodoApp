@@ -1,6 +1,15 @@
-import { Sequelize, DataTypes, Model, type InferAttributes, type InferCreationAttributes } from "sequelize";
+import {
+    Sequelize,
+    DataTypes,
+    Model,
+    type InferAttributes,
+    type InferCreationAttributes,
+} from 'sequelize';
 
-export class Task extends Model<InferAttributes<Task>, InferCreationAttributes<Task, { omit: "id" }>> {
+export class Task extends Model<
+    InferAttributes<Task>,
+    InferCreationAttributes<Task, { omit: 'id' }>
+> {
     declare id: number;
     declare name: string;
     declare description: string;
@@ -14,32 +23,32 @@ export function initTaskModel(sequelize: Sequelize) {
             id: {
                 type: DataTypes.INTEGER.UNSIGNED,
                 autoIncrement: true,
-                primaryKey: true
+                primaryKey: true,
             },
             name: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: false,
             },
             description: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: false,
             },
             priority: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 validate: {
                     min: 1,
-                    max: 10
-                }
+                    max: 10,
+                },
             },
             completed: {
                 type: DataTypes.BOOLEAN,
-                allowNull: false
-            }
+                allowNull: false,
+            },
         },
         {
             sequelize,
-            timestamps: false
+            timestamps: false,
         }
-    )
+    );
 }

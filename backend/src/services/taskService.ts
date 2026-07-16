@@ -1,11 +1,10 @@
 import { Task } from '../models/task.js';
-import type { TaskCreationAttributes } from "../types/task.types.js";
-import createError from "http-errors";
+import type { TaskCreationAttributes } from '../types/task.types.js';
+import createError from 'http-errors';
 
 class TaskService {
-
     async getAll() {
-        return Task.findAll()
+        return Task.findAll();
     }
 
     async getOneById(id: number) {
@@ -20,7 +19,7 @@ class TaskService {
         const task = await Task.findByPk(id);
 
         if (!task) {
-            throw createError(404, "Task not found")
+            throw createError(404, 'Task not found');
         }
         return task.update(data);
     }
@@ -29,7 +28,7 @@ class TaskService {
         const task = await Task.findByPk(id);
 
         if (!task) {
-            throw createError(404, "Task not found")
+            throw createError(404, 'Task not found');
         }
         return task.destroy();
     }

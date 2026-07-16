@@ -5,8 +5,8 @@ import { seedTasks } from './seeders/tasks.js';
 
 const PORT = process.env.PORT || 3000;
 
-app.get("/", (req: Request, res: Response) => {
-    res.json({ status: 'ok' })
+app.get('/', (req: Request, res: Response) => {
+    res.json({ status: 'ok' });
 });
 
 await sequelize.authenticate();
@@ -14,8 +14,8 @@ await sequelize.sync({ force: false });
 
 await seedTasks();
 
-console.log("Connected to MySQL.")
+console.log('Connected to MySQL.');
 
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
-})
+    console.log(`Server running on port ${PORT}`);
+});

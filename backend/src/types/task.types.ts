@@ -6,4 +6,4 @@ export interface TaskAttributes {
     completed: boolean;
 }
 
-export interface TaskCreationAttributes extends Omit<TaskAttributes, "id">{}
+export interface TaskCreationAttributes extends Omit<TaskAttributes, 'id'> {}

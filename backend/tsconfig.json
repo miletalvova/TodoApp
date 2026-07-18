@@ -9,7 +9,7 @@
         "module": "nodenext",
         "moduleResolution": "nodenext",
         "target": "es2022",
-        "types": ["node"],
+        "types": ["node", "jest"],
         // For nodejs:
         // "lib": ["esnext"],
         // "types": ["node"],
@@ -33,7 +33,9 @@
         "noUncheckedSideEffectImports": true,
         "moduleDetection": "force",
         "skipLibCheck": true,
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
     },
     "include": ["src"],
     "exclude": ["node_modules", "dist"]

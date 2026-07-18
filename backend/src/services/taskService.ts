@@ -2,9 +2,38 @@ import { Task } from '../models/task.js';
 import type { TaskCreationAttributes } from '../types/task.types.js';
 import createError from 'http-errors';
 
+type TaskTypes = {
+    status?: 'all' | 'done' | 'undone' | undefined;
+    sort?: 'priority' | undefined;
+    order?: 'asc' | 'desc' | undefined;
+};
+
 class TaskService {
-    async getAll() {
-        return Task.findAll();
+    async getAll({ status = 'all', sort, order = 'asc' }: TaskTypes) {
+        const where: any = {};
+        const orderBy: any[] = [];
+
+        switch (status) {
+            case 'done':
+                where.completed = true;
+                break;
+
+            case 'undone':
+                where.completed = false;
+                break;
+
+            case 'all':
+            default:
+                break;
+        }
+
+        if (sort === 'priority') {
+            orderBy.push(['priority', order === 'desc' ? 'DESC' : 'ASC']);
+        }
+        return Task.findAll({
+            where,
+            order: orderBy,
+        });
     }
 
     async getOneById(id: number) {

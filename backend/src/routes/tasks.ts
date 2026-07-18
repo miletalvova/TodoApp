@@ -30,8 +30,17 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     }*/
     /* #swagger.responses[500] = { $ref: '#/components/responses/InternalServerError' } */
 
+    const status =
+        req.query.status === 'done' || req.query.status === 'undone' || req.query.status === 'all'
+            ? req.query.status
+            : 'all';
+
+    const sort = req.query.sort === 'priority' ? 'priority' : undefined;
+
+    const order = req.query.order === 'desc' ? 'desc' : 'asc';
+
     try {
-        const tasks = await TaskService.getAll();
+        const tasks = await TaskService.getAll({ status, sort, order });
         return res.status(200).json({
             status: 'success',
             statusCode: 200,
@@ -141,13 +150,28 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { name, description, priority } = req.body;
 
-        if (!name || !description || !priority) {
+        if (
+            typeof name !== 'string' ||
+            name.trim() === '' ||
+            typeof description !== 'string' ||
+            description.trim() === '' ||
+            priority === undefined
+        ) {
             return res.status(400).json({
                 status: 'error',
                 statusCode: 400,
                 message: 'Missing required fields: name, description, priority',
             });
         }
+
+        if (!Number.isInteger(priority) || priority < 1 || priority > 10) {
+            return res.status(400).json({
+                status: 'error',
+                statusCode: 400,
+                message: 'Priority must be between 1 and 10',
+            });
+        }
+
         const tasks = await TaskService.create({
             name,
             description,
@@ -224,7 +248,15 @@ router.put('/:id', async (req: Request<{ id: string }>, res: Response, next: Nex
                 status: 'error',
                 statusCode: 400,
                 message:
-                    'AT least one filed (name, description, priority, completed) must be provided for update.',
+                    'At least one field (name, description, priority, completed) must be provided for update.',
+            });
+        }
+
+        if (!Number.isInteger(priority) || priority < 1 || priority > 10) {
+            return res.status(400).json({
+                status: 'error',
+                statusCode: 400,
+                message: 'Priority must be between 1 and 10',
             });
         }
 

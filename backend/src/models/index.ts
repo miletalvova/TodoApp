@@ -1,5 +1,7 @@
 import dotenv from 'dotenv';
-dotenv.config();
+dotenv.config({
+    path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
+});
 import { Sequelize } from 'sequelize';
 import mysql2 from 'mysql2';
 import { initTaskModel } from './task.js';

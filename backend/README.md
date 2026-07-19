@@ -36,6 +36,8 @@ The application is deployed on Render and securely connects to a cloud-hosted My
 - Cloud-hosted MySQL database (Aiven)
 - Production deployment on Render
 
+---
+
 ## Architecture
 
 ```mermaid
@@ -58,15 +60,14 @@ Model-->DB[(MySQL)]
 
 ## Tech Stack
 
-| Category      | Technologies                                               |
-| ------------- | ---------------------------------------------------------- |
-| Runtime       | Node.js 22                                                 |
-| Backend       | Express.js 5, TypeScript                                   |
-| Database      | MySQL, Sequelize ORM                                       |
-| Testing       | Jest, Supertest                                            |
-| Documentation | Swagger / OpenAPI                                          |
-| Deployment    | Render, Aiven MySQL                                        |
-
+| Category      | Technologies             |
+| ------------- | ------------------------ |
+| Runtime       | Node.js 22               |
+| Backend       | Express.js 5, TypeScript |
+| Database      | MySQL, Sequelize ORM     |
+| Testing       | Jest, Supertest          |
+| Documentation | Swagger / OpenAPI        |
+| Deployment    | Render, Aiven MySQL      |
 
 ---
 
@@ -88,13 +89,13 @@ Production
 
 ### Tasks
 
-| Method | Endpoint              | Description                               |
-| ------ | --------------------- | ----------------------------------------- |
-| GET    | /api/tasks            | Get all tasks                             |
-| GET    | /api/tasks/:id       | Get task by ID                            |
-| POST   | /api/tasks            | Create task                               |
-| PUT    | /api/tasks/:id       | Update task                               |
-| DELETE | /api/tasks/:id       | Delete task                               |
+| Method | Endpoint       | Description    |
+| ------ | -------------- | -------------- |
+| GET    | /api/tasks     | Get all tasks  |
+| GET    | /api/tasks/:id | Get task by ID |
+| POST   | /api/tasks     | Create task    |
+| PUT    | /api/tasks/:id | Update task    |
+| DELETE | /api/tasks/:id | Delete task    |
 
 ---
 
@@ -123,6 +124,8 @@ Run the test suit
 ```bash
 npm test
 ```
+
+---
 
 ## Local Development
 
@@ -168,15 +171,16 @@ npm run dev
 
 The API will be available at `http://localhost:3000`.
 
+---
+
 ## Deployment
 
 The production backend is deployed on Render and connects to an Aiven MySQL database.
 
-| Component          | Platform       |
-| ------------------ | -------------- |
-| Backend            | Render         |
-| Database           | Aiven MySQL    |
-
+| Component | Platform    |
+| --------- | ----------- |
+| Backend   | Render      |
+| Database  | Aiven MySQL |
 
 ---
 
@@ -189,6 +193,7 @@ To disable seeding, comment out:
 ```typescript
 // await seedTasks();
 ```
+
 ---
 
 ## Feature Improvements

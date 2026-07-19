@@ -44,7 +44,7 @@ class TaskService {
         if (data.priority < 1 || data.priority > 10) {
             throw createError(400, 'Priority must be between 1 and 10');
         }
-        
+
         return Task.create(data);
     }
 

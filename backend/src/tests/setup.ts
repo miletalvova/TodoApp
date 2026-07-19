@@ -10,7 +10,7 @@ beforeEach(async () => {
     await Task.destroy({
         where: {},
         truncate: true,
-    })
+    });
 });
 
 afterAll(async () => {

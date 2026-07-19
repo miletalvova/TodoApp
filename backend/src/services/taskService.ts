@@ -41,6 +41,10 @@ class TaskService {
     }
 
     async create(data: TaskCreationAttributes) {
+        if (data.priority < 1 || data.priority > 10) {
+            throw createError(400, 'Priority must be between 1 and 10');
+        }
+        
         return Task.create(data);
     }
 
@@ -50,6 +54,11 @@ class TaskService {
         if (!task) {
             throw createError(404, 'Task not found');
         }
+
+        if (data.priority !== undefined && (data.priority < 1 || data.priority > 10)) {
+            throw createError(400, 'Priority must be between 1 and 10');
+        }
+
         return task.update(data);
     }
 

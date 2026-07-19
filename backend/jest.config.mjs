@@ -10,7 +10,5 @@ export default {
         '^(\\.{1,2}/.*)\\.js$': '$1',
     },
 
-    setupFilesAfterEnv: [
-        "<rootDir>/src/tests/setup.ts"
-    ]
+    setupFilesAfterEnv: ['<rootDir>/src/tests/setup.ts'],
 };

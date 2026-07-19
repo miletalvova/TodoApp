@@ -164,14 +164,6 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
             });
         }
 
-        if (!Number.isInteger(priority) || priority < 1 || priority > 10) {
-            return res.status(400).json({
-                status: 'error',
-                statusCode: 400,
-                message: 'Priority must be between 1 and 10',
-            });
-        }
-
         const tasks = await TaskService.create({
             name,
             description,
@@ -249,14 +241,6 @@ router.put('/:id', async (req: Request<{ id: string }>, res: Response, next: Nex
                 statusCode: 400,
                 message:
                     'At least one field (name, description, priority, completed) must be provided for update.',
-            });
-        }
-
-        if (!Number.isInteger(priority) || priority < 1 || priority > 10) {
-            return res.status(400).json({
-                status: 'error',
-                statusCode: 400,
-                message: 'Priority must be between 1 and 10',
             });
         }
 

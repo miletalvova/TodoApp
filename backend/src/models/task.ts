@@ -48,7 +48,7 @@ export function initTaskModel(sequelize: Sequelize) {
         },
         {
             sequelize,
-            timestamps: false,
+            timestamps: true,
         }
     );
 }

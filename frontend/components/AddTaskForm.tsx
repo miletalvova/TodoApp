@@ -136,6 +136,10 @@ export default function AddTaskForm({ refreshTasks, taskToEdit, saveEditedTask }
                 })
               }
             >
+              <SelectTrigger className="w-full">
+                <SelectValue />
+              </SelectTrigger>
+
               <SelectContent>
                 {[...Array(10)].map((_, index) => (
                   <SelectItem

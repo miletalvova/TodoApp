@@ -2,6 +2,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import AddTaskForm from '../components/AddTaskForm';
 import { createTask } from '../lib/api';
+import userEvent from '@testing-library/user-event';
 
 jest.mock('@/lib/api', () => ({
   createTask: jest.fn(),
@@ -59,19 +60,18 @@ describe('AddTaskForm component', () => {
     expect(textarea).toHaveValue('Go to supermarket');
   });
 
-  it('updates priority', () => {
+  it('updates priority', async () => {
     render(
       <AddTaskForm refreshTasks={refreshTasks} taskToEdit={null} saveEditedTask={saveEditedTask} />,
     );
 
-    const priority = screen.getByLabelText(/priority/i);
+    const user = userEvent.setup();
 
-    fireEvent.change(priority, {
-      target: { value: '5' },
-    });
+    await user.click(screen.getByRole('combobox'));
 
-    expect(priority).toHaveValue('5');
+    await user.click(screen.getByText('5'));
   });
+
 
   it('submits a new task', async () => {
     (createTask as jest.Mock).mockResolvedValue({});
@@ -80,19 +80,20 @@ describe('AddTaskForm component', () => {
       <AddTaskForm refreshTasks={refreshTasks} taskToEdit={null} saveEditedTask={saveEditedTask} />,
     );
 
-    fireEvent.change(screen.getByLabelText(/task name/i), {
-      target: { value: 'Buy milk' },
-    });
+    const user = userEvent.setup();
 
-    fireEvent.change(screen.getByLabelText(/description/i), {
-      target: { value: 'From supermarket' },
-    });
+    await user.type(screen.getByLabelText(/task name/i), 'Buy milk');
 
-    fireEvent.change(screen.getByLabelText(/priority/i), {
-      target: { value: '3' },
-    });
+    await user.type(
+      screen.getByLabelText(/description/i),
+      'From supermarket',
+    );
 
-    fireEvent.click(
+    await user.click(screen.getByRole('combobox'));
+
+    await user.click(screen.getByText('3'));
+
+    await user.click(
       screen.getByRole('button', {
         name: 'Add Task',
       }),

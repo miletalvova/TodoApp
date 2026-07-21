@@ -128,6 +128,29 @@ public/
 
 ---
 
+## Testing
+
+The frontend includes automated component tests using **Jest** and **React Testing Library** to verify the behavior of the user interface.
+
+### Covered functionality
+
+- Rendering of UI components
+- Form input handling
+- Task creation workflow
+- Edit mode rendering
+- User interactions with form controls
+- API call mocking for isolated component testing
+
+### Running tests
+
+Run all tests:
+
+```text
+npm test
+```
+
+---
+
 ## Feature Improvements
 
 - Authentication and user accounts

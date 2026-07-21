@@ -1,6 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import type { ITask } from '@/types/task';
 import { getPriorityInfo } from './task-utils';
 
@@ -15,52 +16,61 @@ export default function TaskCard({ task, onEdit, onDelete, onToggleComplete }: P
   const priority = getPriorityInfo(task.priority);
 
   return (
-    <Card className="w-full shadow-sm hover:shadow-md transition-shadow">
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>{task.name}</CardTitle>
+    <Card className="w-full shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+      <CardContent className="flex items-center gap-6 py-6">
 
-        <Badge className={
-                task.completed
-                  ? 'bg-emerald-100 text-emerald-700'
-                  : 'bg-amber-100 text-amber-700'
-              }>
-          {task.completed ? 'Completed' : 'Pending'}
-        </Badge>
-      </CardHeader>
+        <div className="flex items-center justify-center gap-3">
+          <Checkbox
+            checked={task.completed}
+            onCheckedChange={() =>
+              onToggleComplete?.({
+                ...task,
+                completed: !task.completed,
+              })
+            }
+          />
+        </div>
 
-      <CardContent className="space-y-4">
-        <p className="text-sm text-muted-foreground">{task.description}</p>
+        <div className="flex-1 space-y-4">
 
-        <div className="flex items-center justify-between">
+          <CardTitle className={`${task.completed ? "line-through text-muted-foreground" : ""}`}>{task.name}</CardTitle>
+
+          <p className="text-sm text-muted-foreground">{task.description}</p>
+
+
           <Badge variant="outline" className={priority.className}>{priority.label} {task.priority}</Badge>
+        </div>
+
+
+        <div className="flex flex-col items-end justify-between gap-4 self-stretch">
+          <Badge
+            className={
+              task.completed
+                ? 'bg-emerald-100 text-emerald-700 h-10 w-24'
+                : 'bg-amber-100 text-amber-700 h-10 w-24'
+            }>
+            {task.completed ? 'Completed' : 'Pending'}
+          </Badge>
 
           <div className="flex gap-2">
-            <Button
-              variant="default"
-              size="sm"
-              onClick={() => onToggleComplete?.({ ...task, completed: !task.completed })}
-              className={
-                task.completed
-                  ? 'bg-amber-500 hover:bg-amber-600'
-                  : 'bg-emerald-600 hover:bg-emerald-700'
-              }
-            >
-              {task.completed ? 'Undo' : 'Done'}
-            </Button>
 
             <Button variant="outline"
-              size="sm"
-              className="border-sky-200 text-sky-700 hover:bg-sky-50"
+              size="lg"
+              className="border-sky-200 text-sky-700 hover:bg-sky-50 w-20"
               onClick={() => onEdit?.(task)}>
               Edit
             </Button>
 
-            <Button variant="destructive" size="sm" onClick={() => onDelete?.(task.id)}>
+            <Button variant="destructive"
+              size="lg"
+              className="w-20"
+              onClick={() => onDelete?.(task.id)}>
               Delete
             </Button>
+
           </div>
         </div>
       </CardContent>
-    </Card>
+    </Card >
   );
 }

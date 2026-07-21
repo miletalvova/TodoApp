@@ -1,6 +1,6 @@
 'use client';
 import './globals.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import AddTaskForm from '../components/AddTaskForm';
 import TaskList from '../components/TaskList';
 import Search from '../components/Search';
@@ -16,7 +16,7 @@ export default function Home() {
   const [status, setStatus] = useState<'all' | 'done' | 'undone'>('all');
   const [order, setOrder] = useState<'low-high' | 'high-low'>('low-high');
 
-  async function loadTasks() {
+  const loadTasks = useCallback(async () => {
     try {
       const apiOrder = order === 'low-high' ? 'asc' : 'desc';
       const tasks = await getTasks({ search, status, sort: 'priority', order: apiOrder });
@@ -24,7 +24,7 @@ export default function Home() {
     } catch (err) {
       console.error(err);
     }
-  }
+  }, [search, status, order]);
 
   async function handleDelete(id: number) {
     try {
@@ -60,7 +60,7 @@ export default function Home() {
       await loadTasks();
     };
     fetchTasks();
-  }, [search, status, order]);
+  }, [loadTasks]);
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-8 space-y-12">

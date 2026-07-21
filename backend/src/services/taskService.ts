@@ -24,7 +24,6 @@ class TaskService {
                 where.completed = false;
                 break;
 
-            case 'all':
             default:
                 break;
         }

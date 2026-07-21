@@ -105,11 +105,11 @@ The project followed a Kanban workflow for planning, prioritizing, and tracking 
 
 ### Backend Work Item
 
-![Backend Work Item](jira-backend.png)
+![Backend Work Item](assets/jira-backend.png)
 
 ### Frontend Work Item
 
-![Frontend Work Item](jira-frontend.png)
+![Frontend Work Item](assets/jira-frontend.png)
 
 ---
 

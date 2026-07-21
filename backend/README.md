@@ -1,6 +1,8 @@
 # Todo Application Backend
 
-**Status:** In Progress
+**Status:** Deployed
+
+**API:** https://todoapp-ow2m.onrender.com/api
 
 ## About The Project
 
@@ -8,7 +10,7 @@ The Todo Application Backend is a REST API built with Node.js, Express.js, TypeS
 
 It provides a complete backend for managing tasks, including CRUD operations, business validation, filtering, sorting, and intaractive API documentation with Swagger/OpenAPI.
 
-The application is deployed on Render and securely connects to a cloud-hosted MySQL database on Aiven.
+The application is deployed on Render and securely connects to a cloud-hosted MySQL database on Railway.
 
 ---
 
@@ -33,7 +35,7 @@ The application is deployed on Render and securely connects to a cloud-hosted My
 - Sorting tasks by priority
 - Interactive Swagger/OpenAPI documentation
 - Comprehensive unit and integration test suites with an isolated MySQL test database
-- Cloud-hosted MySQL database (Aiven)
+- Cloud-hosted MySQL database (Railway)
 - Production deployment on Render
 
 ---
@@ -67,7 +69,7 @@ Model-->DB[(MySQL)]
 | Database      | MySQL, Sequelize ORM     |
 | Testing       | Jest, Supertest          |
 | Documentation | Swagger / OpenAPI        |
-| Deployment    | Render, Aiven MySQL      |
+| Deployment    | Render, Railway MySQL    |
 
 ---
 
@@ -84,7 +86,7 @@ http://localhost:3000/doc
 Production
 
 ```
-/doc/
+https://todoapp-ow2m.onrender.com/doc/
 ```
 
 ### Tasks
@@ -175,12 +177,12 @@ The API will be available at `http://localhost:3000`.
 
 ## Deployment
 
-The production backend is deployed on Render and connects to an Aiven MySQL database.
+The production backend is deployed on Render and connects to an Railway MySQL database.
 
-| Component | Platform    |
-| --------- | ----------- |
-| Backend   | Render      |
-| Database  | Aiven MySQL |
+| Component | Platform      |
+| --------- | ------------- |
+| Backend   | Render        |
+| Database  | Railway MySQL |
 
 ---
 

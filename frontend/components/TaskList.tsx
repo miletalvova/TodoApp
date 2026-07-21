@@ -11,7 +11,13 @@ type Props = {
 
 export default function TaskList({ tasks, deleteTask, editTask, onToggleComplete }: Props) {
   if (tasks.length === 0) {
-    return <p className="text-center text-muted-foreground">No tasks found.<br/>Create your first task to get started.</p>;
+    return (
+      <p className="text-center text-muted-foreground">
+        No tasks found.
+        <br />
+        Create your first task to get started.
+      </p>
+    );
   }
 
   return (

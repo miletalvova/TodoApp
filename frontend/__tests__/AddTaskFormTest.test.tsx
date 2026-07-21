@@ -72,7 +72,6 @@ describe('AddTaskForm component', () => {
     await user.click(screen.getByText('5'));
   });
 
-
   it('submits a new task', async () => {
     (createTask as jest.Mock).mockResolvedValue({});
 
@@ -84,10 +83,7 @@ describe('AddTaskForm component', () => {
 
     await user.type(screen.getByLabelText(/task name/i), 'Buy milk');
 
-    await user.type(
-      screen.getByLabelText(/description/i),
-      'From supermarket',
-    );
+    await user.type(screen.getByLabelText(/description/i), 'From supermarket');
 
     await user.click(screen.getByRole('combobox'));
 

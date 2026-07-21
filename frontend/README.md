@@ -1,6 +1,8 @@
 # Todo Application Frontend
 
-**Status:** In Progress
+**Status:** Deployed
+
+**API:** https://todo-app-alpha-ten-1e8nvo9l9f.vercel.app/
 
 ## About The Project
 

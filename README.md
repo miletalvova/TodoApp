@@ -1,6 +1,8 @@
 # Todo Application
 
-**Status:** In Progress
+**Status:** Deployed
+
+**API:** https://todo-app-alpha-ten-1e8nvo9l9f.vercel.app/
 
 ## About The Project
 
@@ -119,7 +121,7 @@ The project followed a Kanban workflow for planning, prioritizing, and tracking 
 | ---------- | -------- |
 | Frontend | Vercel |
 | Backend | Render |
-| Database | Aiven MySQL |
+| Database | Railway MySQL |
 
 ---
 

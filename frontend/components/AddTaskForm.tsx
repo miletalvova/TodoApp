@@ -1,111 +1,171 @@
-'use client'
+'use client';
 import { useEffect, useState } from 'react';
 import type { ITask } from '../types/task';
 import { createTask } from '../lib/api';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 type Props = {
-    onTaskCreated: () => void;
-    selectedTask: ITask | null;
-    onTaskUpdated: (task: ITask) => void;
-}
+  refreshTasks: () => void;
+  taskToEdit: ITask | null;
+  saveEditedTask: (task: ITask) => void;
+};
 
-export default function AddTaskForm({ onTaskCreated, selectedTask, onTaskUpdated }: Props) {
-    const [form, setForm] = useState({
+export default function AddTaskForm({ refreshTasks, taskToEdit, saveEditedTask }: Props) {
+  const [form, setForm] = useState({
+    name: '',
+    description: '',
+    priority: 1,
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  /* eslint-disable react-hooks/set-state-in-effect */
+
+  useEffect(() => {
+    if (taskToEdit) {
+      setForm({
+        name: taskToEdit.name,
+        description: taskToEdit.description,
+        priority: taskToEdit.priority,
+      });
+    } else {
+      setForm({
         name: '',
         description: '',
         priority: 1,
-    });
-
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
-
-    useEffect(() => {
-        if (selectedTask) {
-            setForm({
-                name: selectedTask.name,
-                description: selectedTask.description,
-                priority: selectedTask.priority,
-
-            })
-        } else {
-            setForm({
-                name: '',
-                description: '',
-                priority: 1,
-            });
-        }
-    }, [selectedTask]);
-
-    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-
-        setLoading(true);
-        setError('');
-
-        try {
-            if (selectedTask) {
-                await onTaskUpdated({
-                    ...selectedTask,
-                    name: form.name,
-                    description: form.description,
-                    priority: form.priority,
-                });
-            } else {
-                await createTask({
-                    name: form.name,
-                    description: form.description,
-                    priority: form.priority,
-                    completed: false,
-                });
-
-                onTaskCreated();
-            }
-
-            setForm({
-                name: '',
-                description: '',
-                priority: 1,
-            });
-        } catch (err) {
-            setError(err instanceof Error ? err.message : 'Something went wrong')
-        } finally {
-            setLoading(false);
-        }
+      });
     }
+  }, [taskToEdit]);
 
-    return (
-        <section className='bg-white shadow rounded-xl p-6'>
-            <h2 className='text-2xl font-semibold mb-6'>{selectedTask ? 'Edit Task' : 'Create Task'}</h2>
+  /* eslint-enable react-hooks/set-state-in-effect */
 
-            <form onSubmit={handleSubmit} className='space-y-4'>
-                <div>
-                    <label htmlFor="name" className="block text-sm font-medium mb-1">Task name</label>
-                    <input id="name" type="text" name="name" value={form.name} onChange={(e) => setForm({...form, name: e.target.value})} className="w-full border rounded px-3 py-2" required></input>
-                </div>
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
 
-                <div>
-                    <label htmlFor="description" className="block text-sm font-medium mb-1">Description</label>
-                    <textarea id="description" value={form.description} onChange={(e) => setForm({...form, description: e.target.value})} className="w-full border rounded px-3 py-2" rows={4} required />
-                </div>
+    setLoading(true);
+    setError('');
 
-                <div>
-                    <label htmlFor="priority" className="block text-sm font-medium mb-1">Priority</label>
-                    <select id='priority' value={form.priority} onChange={(e) => setForm({...form, priority: Number(e.target.value)})} className='border rounded px-3 py-2'>
-                        {[...Array(10)].map((_, index) => (
-                            <option key={index + 1} value={index + 1}>{index + 1}</option>
-                        ))}
-                    </select>
-                </div>
+    try {
+      if (taskToEdit) {
+        await saveEditedTask({
+          ...taskToEdit,
+          name: form.name,
+          description: form.description,
+          priority: form.priority,
+        });
+      } else {
+        await createTask({
+          name: form.name,
+          description: form.description,
+          priority: form.priority,
+          completed: false,
+        });
 
-                {error && (
-                    <p className='text-red-600'>{error}</p>
-                )}
+        refreshTasks();
+      }
 
-                <button type="submit" disabled={loading} className='bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700 disabled:bg-gray-400'>
-                    {loading ? selectedTask ? 'Updating...' : 'Creating...' : selectedTask ? 'Update Task' : 'Add Task'}
-                </button>
-            </form>
+      setForm({
+        name: '',
+        description: '',
+        priority: 1,
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong');
+    } finally {
+      setLoading(false);
+    }
+  }
 
-        </section>
-    )
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>
+          {taskToEdit ? 'Edit Task' : 'Create Task'}
+        </CardTitle>
+      </CardHeader>
+
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-2">
+            <Label htmlFor="name">Task name</Label>
+
+            <Input
+              id="name"
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              className="w-full border rounded px-3 py-2"
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="description">Description</Label>
+            <Textarea
+              id="description"
+              value={form.description}
+              onChange={(e) => setForm({ ...form, description: e.target.value })}
+              className="w-full border rounded px-3 py-2"
+              rows={4}
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="priority">Priority</Label>
+
+            <Select
+              value={String(form.priority)}
+              onValueChange={(value) =>
+                setForm({
+                  ...form,
+                  priority: Number(value),
+                })
+              }
+            >
+              <SelectContent>
+                {[...Array(10)].map((_, index) => (
+                  <SelectItem
+                    key={index + 1}
+                    value={String(index + 1)}
+                  >
+                    {index + 1}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {error && <p className="text-sm text-destructive">{error}</p>}
+
+          <Button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-sky-500/100 hover:bg-sky-600"
+          >
+            {loading
+              ? taskToEdit
+                ? 'Updating...'
+                : 'Creating...'
+              : taskToEdit
+                ? 'Update Task'
+                : 'Add Task'}
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
+  );
 }

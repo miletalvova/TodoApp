@@ -1,15 +1,17 @@
 import { Task } from '../models/task.js';
 import type { TaskCreationAttributes } from '../types/task.types.js';
 import createError from 'http-errors';
+import { Op } from 'sequelize';
 
 type TaskTypes = {
     status?: 'all' | 'done' | 'undone' | undefined;
     sort?: 'priority' | undefined;
     order?: 'asc' | 'desc' | undefined;
+    search?: string;
 };
 
 class TaskService {
-    async getAll({ status = 'all', sort, order = 'asc' }: TaskTypes) {
+    async getAll({ status = 'all', sort, order = 'asc', search = '' }: TaskTypes) {
         const where: any = {};
         const orderBy: any[] = [];
 
@@ -27,9 +29,25 @@ class TaskService {
                 break;
         }
 
+        if (search) {
+            where[Op.or] = [
+                {
+                    name: {
+                        [Op.like]: `%${search}%`,
+                    },
+                },
+                {
+                    description: {
+                        [Op.like]: `%${search}%`,
+                    },
+                },
+            ];
+        }
+
         if (sort === 'priority') {
             orderBy.push(['priority', order === 'desc' ? 'DESC' : 'ASC']);
         }
+
         return Task.findAll({
             where,
             order: orderBy,

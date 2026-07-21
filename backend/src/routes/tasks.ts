@@ -39,8 +39,10 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 
     const order = req.query.order === 'desc' ? 'desc' : 'asc';
 
+    const search = typeof req.query.search === 'string' ? req.query.search : '';
+
     try {
-        const tasks = await TaskService.getAll({ status, sort, order });
+        const tasks = await TaskService.getAll({ status, sort, order, search });
         return res.status(200).json({
             status: 'success',
             statusCode: 200,

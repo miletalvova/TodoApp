@@ -1,10 +1,9 @@
 import Header from '../components/Header';
-import Footer from '../components/Footer'
-import { Geist } from "next/font/google";
-import { cn } from "@/lib/utils";
+import Footer from '../components/Footer';
+import { Geist } from 'next/font/google';
+import { cn } from '@/lib/utils';
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
-
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 export default function RootLayout({
   children,
@@ -12,15 +11,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)}>
-      <body className='min-h-screen flex flex-col'>
-
+    <html lang="en" className={cn('font-sans', geist.variable)}>
+      <body className="min-h-screen flex flex-col bg-slate-50">
         <Header />
 
-        <main className='flex-1'>{children}</main>
+        <main className="flex-1">{children}</main>
 
         <Footer />
-
       </body>
     </html>
   );

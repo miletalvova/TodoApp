@@ -1,36 +1,139 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Todo Application Frontend
 
-## Getting Started
+**Status:** In Progress
 
-First, run the development server:
+## About The Project
+
+The Todo Application Frontend is a web application built with Next.js, React, TypeScript, Tailwind CSS, and shadcn/ui component library.
+
+It provides a responsive user interface for managing tasks through a REST API, including creating, updating, deleting, filtering, sorting, searching, and marking tasks as completed.
+
+The application communicates with the Todo Application Backend and consumes its REST API.
+
+---
+
+### Features
+
+- View all tasks
+- Create new tasks
+- Edit existing tasks
+- Delete tasks
+- Mark tasks as completed or undone
+- Search tasks by name or description
+- Filter tasks by completion status
+- Sort tasks by priority
+- Responsive user interface
+- Modern UI components built with shadcn/ui
+
+---
+
+## Architecture
+
+```mermaid
+flowchart LR
+
+User["User"]
+
+User --> UI["Next.js Pages"]
+
+UI --> Components["React Components"]
+
+Components --> API["API Client"]
+
+API --> Backend["Express REST API"]
+```
+
+---
+
+## Tech Stack
+
+| Category    | Technologies              |
+| ----------- | ------------------------- |
+| Framework   | Next.js 16                |
+| Frontend    | React 19, TypeScript      |
+| Styling     | Tailwind CSS 4, shadcn/ui |
+| Icons       | Lucide React              |
+| HTTP Client | Fetch API                 |
+| Backend API | Express.js REST API       |
+
+---
+
+## Application Features
+
+### Task Management
+
+- Create tasks
+- Update tasks
+- Delete tasks
+- Mark tasks as completed or undone
+
+### Task Filtering
+
+- Filter tasks by completion status (`all`, `done`, `undone`)
+- Search tasks by name and description
+- Sort tasks by priority (`asc`, `desc`)
+
+---
+
+## Local Development
+
+### Running locally
+
+### Steps
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/miletalvova/TodoApp.git
+cd TodoApp/frontend
+```
+
+2. Install dependencies
+
+```bash
+npm install
+```
+
+3. Create .env
+
+Example:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3000/api/tasks
+```
+
+4. Start the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> [!WARNING]
+> Replace all placeholder values with your actual backend URL. Never commit `.env` to version control.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The application will be available at `http://localhost:3001` (or the default Next.js development port).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```text
+app/
+components/
+components/ui/
+lib/
+types/
+public/
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Feature Improvements
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Authentication and user accounts
+- Pagination
+- Task categories
+- Due dates
+- Drag-and-drop task ordering
+- Dark mode
+- Optimistic UI updates

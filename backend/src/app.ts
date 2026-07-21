@@ -11,7 +11,10 @@ app.use(express.json());
 
 app.use(
     cors({
-        origin: '*',
+        origin: [
+            'http://localhost:3001',
+            'https://todo-app-alpha-ten-1e8nvo9l9f.vercel.app'
+        ],
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
     })
 );

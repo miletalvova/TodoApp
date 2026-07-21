@@ -10,7 +10,7 @@ export async function seedTasks() {
         },
         {
             name: 'Schedule dentist appointment',
-            description: 'Checkup and celaning',
+            description: 'Checkup and cleaning',
             priority: 3,
             completed: false,
         },
